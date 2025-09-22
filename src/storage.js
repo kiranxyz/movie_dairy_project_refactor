@@ -50,12 +50,24 @@ function getStorage() {
 }
 
 function removeFromStorage(movieId) {
+  // get current favs
   let favMovieArray = JSON.parse(localStorage.getItem("favMovies")) || [];
-  favMovieArray = favMovieArray.filter((m) => m.id !== movieId);
+
+  // filter out the movie by id
+  favMovieArray = favMovieArray.filter((m) => m.id !== Number(movieId));
+
+  // save updated list
   localStorage.setItem("favMovies", JSON.stringify(favMovieArray));
-  localStorage.removeItem(movieId);
-  console.log(`Movie with id ${movieId} removed from favorites`);
+
+  // remove the card from the DOM
+  const card = document.querySelector(`[data-movie-id="${movieId}"]`);
+  if (card) {
+    card.remove();
+  }
+
+  console.log(`🗑️ Movie with id ${movieId} removed from favorites`);
 }
+
 function clearStorage() {
   localStorage.clear();
 }
