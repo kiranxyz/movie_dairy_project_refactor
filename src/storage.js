@@ -8,25 +8,23 @@
  */
 function addToStorage(movie) {
   let favMovieArray = [];
+
   if (localStorage.getItem("favMovies")) {
-    console.log("localStorage has favMovies key found");
-
-    // # get existing movies from localStorage
-    const existingMovies = JSON.parse(localStorage.getItem("favMovies"));
-
-    // # check if the movie already exists in the storage
-    const movieExists = existingMovies.find((m) => m.id === movie.id);
-    if (!movieExists) {
-      favMovieArray.push(movie);
-      localStorage.setItem("favMovies", JSON.stringify(favMovieArray));
-      console.log(`${movie.title} added to favorites`);
-    } else {
-      console.log(`${movie.title} is already in favorites`);
-    }
-    favMovieArray = [...existingMovies];
+    // get existing movies from localStorage
+    favMovieArray = JSON.parse(localStorage.getItem("favMovies"));
   }
-  favMovieArray.push(movie);
-  localStorage.setItem("favMovies", JSON.stringify(favMovieArray));
+  // check if the movie already exists
+
+  // check if a movie with the same id already exists
+  const movieExists = favMovieArray.some((m) => m.id === movie.id);
+
+  if (!movieExists) {
+    favMovieArray.push(movie);
+    localStorage.setItem("favMovies", JSON.stringify(favMovieArray));
+    console.log(`${movie.title} added to favorites`);
+  } else {
+    console.log(`${movie.title} is already in favorites`);
+  }
 }
 
 /**
