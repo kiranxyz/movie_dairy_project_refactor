@@ -50,16 +50,12 @@ function getStorage() {
 }
 
 function removeFromStorage(movieId) {
-  // get current favs
   let favMovieArray = JSON.parse(localStorage.getItem("favMovies")) || [];
 
-  // filter out the movie by id
   favMovieArray = favMovieArray.filter((m) => m.id !== Number(movieId));
 
-  // save updated list
   localStorage.setItem("favMovies", JSON.stringify(favMovieArray));
 
-  // remove the card from the DOM
   const card = document.querySelector(`[data-movie-id="${movieId}"]`);
   if (card) {
     card.remove();
