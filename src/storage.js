@@ -16,6 +16,13 @@ function addToStorage(movie) {
 
     // # check if the movie already exists in the storage
     const movieExists = existingMovies.find((m) => m.id === movie.id);
+    if (!movieExists) {
+      favMovieArray.push(movie);
+      localStorage.setItem("favMovies", JSON.stringify(favMovieArray));
+      console.log(`${movie.title} added to favorites`);
+    } else {
+      console.log(`${movie.title} is already in favorites`);
+    }
     favMovieArray = [...existingMovies];
   }
   favMovieArray.push(movie);
@@ -32,25 +39,26 @@ function addToStorage(movie) {
 // # get movies from localStorage
 function getStorage() {
   // # check if there is any existing favMovies in localStorage
-  if (!localStorage.getItem("favMovies")) return [];
+  try {
+    const storedMovies = localStorage.getItem("favMovies");
+    if (!storedMovies) return []; // no key found → return empty array
 
-  // # get existing favMovies from localStorage
-  const existingfavMovies = localStorage.getItem("favMovies");
-
-  // # return existing favMovies as an array
-  return JSON.parse(existingfavMovies);
+    const parsedMovies = JSON.parse(storedMovies);
+    return Array.isArray(parsedMovies) ? parsedMovies : []; // safety check
+  } catch (error) {
+    console.error("Error reading favMovies from localStorage:", error);
+    return []; // fallback → empty array
+  }
 }
 
-function removeFromStorage(item) {}
+function removeFromStorage(movieId) {
+  let favMovieArray = JSON.parse(localStorage.getItem("favMovies")) || [];
+  favMovieArray = favMovieArray.filter((m) => m.id !== movieId);
+  localStorage.setItem("favMovies", JSON.stringify(favMovieArray));
+  localStorage.removeItem(movieId);
+  console.log(`Movie with id ${movieId} removed from favorites`);
+}
 function clearStorage() {
   localStorage.clear();
 }
 export { addToStorage, getStorage, removeFromStorage, clearStorage };
-
-// # Tasks for Anila
-
-//fix addtoStorage function to avoid duplicates
-//fix getStorage function to return empty array if no movies found
-//add removeFromStorage function to remove a movie from localStorage
-//add clearStorage function to clear all movies from localStorage
-//GitHub repo and Parcel setup
