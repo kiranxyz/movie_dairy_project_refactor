@@ -47,5 +47,4 @@ const createFavCardHTML = (movie) => {
   `;
 };
 
-
 export { createFavCardHTML, createCardHTML };
