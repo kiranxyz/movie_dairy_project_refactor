@@ -1,0 +1,18 @@
+{
+  "name": "Movie Dairy",
+  "source": [
+    "index.html",
+    "journal.html"
+  ],
+  "scripts": {
+    "dev": "parcel",
+    "build": "parcel build"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "parcel": "^2.16.0"
+  },
+  "dependencies": {
+    "tailwindcss": "^4.1.13"
+  }
+}
