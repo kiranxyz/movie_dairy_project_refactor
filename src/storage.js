@@ -8,18 +8,23 @@
  */
 function addToStorage(movie) {
   let favMovieArray = [];
+
   if (localStorage.getItem("favMovies")) {
-    console.log("localStorage has favMovies key found");
-
-    // # get existing movies from localStorage
-    const existingMovies = JSON.parse(localStorage.getItem("favMovies"));
-
-    // # check if the movie already exists in the storage
-    const movieExists = existingMovies.find((m) => m.id === movie.id);
-    favMovieArray = [...existingMovies];
+    // get existing movies from localStorage
+    favMovieArray = JSON.parse(localStorage.getItem("favMovies"));
   }
-  favMovieArray.push(movie);
-  localStorage.setItem("favMovies", JSON.stringify(favMovieArray));
+  // check if the movie already exists
+
+  // check if a movie with the same id already exists
+  const movieExists = favMovieArray.some((m) => m.id === movie.id);
+
+  if (!movieExists) {
+    favMovieArray.push(movie);
+    localStorage.setItem("favMovies", JSON.stringify(favMovieArray));
+    console.log(`${movie.title} added to favorites`);
+  } else {
+    console.log(`${movie.title} is already in favorites`);
+  }
 }
 
 /**
@@ -32,16 +37,33 @@ function addToStorage(movie) {
 // # get movies from localStorage
 function getStorage() {
   // # check if there is any existing favMovies in localStorage
-  if (!localStorage.getItem("favMovies")) return [];
+  try {
+    const storedMovies = localStorage.getItem("favMovies");
+    if (!storedMovies) return []; // no key found → return empty array
 
-  // # get existing favMovies from localStorage
-  const existingfavMovies = localStorage.getItem("favMovies");
-
-  // # return existing favMovies as an array
-  return JSON.parse(existingfavMovies);
+    const parsedMovies = JSON.parse(storedMovies);
+    return Array.isArray(parsedMovies) ? parsedMovies : []; // safety check
+  } catch (error) {
+    console.error("Error reading favMovies from localStorage:", error);
+    return []; // fallback → empty array
+  }
 }
 
-function removeFromStorage(item) {}
+function removeFromStorage(movieId) {
+  let favMovieArray = JSON.parse(localStorage.getItem("favMovies")) || [];
+
+  favMovieArray = favMovieArray.filter((m) => m.id !== Number(movieId));
+
+  localStorage.setItem("favMovies", JSON.stringify(favMovieArray));
+
+  const card = document.querySelector(`[data-movie-id="${movieId}"]`);
+  if (card) {
+    card.remove();
+  }
+
+  console.log(`🗑️ Movie with id ${movieId} removed from favorites`);
+}
+
 function clearStorage() {
   localStorage.clear();
 }
