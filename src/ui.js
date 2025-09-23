@@ -47,6 +47,9 @@ const createFavCardHTML = (movie) => {
   `;
 };
 
+
+
+
 export { createFavCardHTML, createCardHTML };
 
 // # Tasks for Harshi
