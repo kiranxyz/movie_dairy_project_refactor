@@ -48,10 +48,4 @@ const createFavCardHTML = (movie) => {
 };
 
 
-
-
 export { createFavCardHTML, createCardHTML };
-
-// # Tasks for Harshi
-//fix createFavCardHTML function to match design
-//if possible, look overall website UI/UX and suggest improvements
