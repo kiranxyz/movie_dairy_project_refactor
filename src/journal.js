@@ -26,5 +26,6 @@ document.addEventListener("click", async (e) => {
     console.log("Add to favourite button clicked");
     const movieId = e.target.getAttribute("data-movie-id");
     console.log("Movie ID:", movieId);
+    removeFromStorage(movieId);
   }
 });
