@@ -46,11 +46,3 @@ function clearStorage() {
   localStorage.clear();
 }
 export { addToStorage, getStorage, removeFromStorage, clearStorage };
-
-// # Tasks for Anila
-
-//fix addtoStorage function to avoid duplicates
-//fix getStorage function to return empty array if no movies found
-//add removeFromStorage function to remove a movie from localStorage
-//add clearStorage function to clear all movies from localStorage
-//GitHub repo and Parcel setup
